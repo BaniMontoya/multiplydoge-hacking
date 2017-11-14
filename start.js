@@ -10,7 +10,6 @@ lost = 0;
 win = 0;
 max = 4;
 max2 = parseFloat($('#balance').html()) - ((parseFloat($('#balance').html()) / 100) * 2);
-
 ganho_inicial = parseFloat($('#balance').html());
 moeda = 'doge'; //doge, btc
 cont = 0;
@@ -19,16 +18,13 @@ perdidas = 0;
 $('body').append('<div id="tabela" style=" overflow:hidden; position: fixed; z-index:99999999999; top: 50px;right: 50px;width: 300px;height: 360px; background:yellow;"><span style="    width: 100%; position: relative; float: left;font-size: 20px" id="ganhadas"></span><span style="    width: 100%; position: relative; float: left;font-size: 20px" id="perdidas"></span><span style="    width: 100%; position: relative; float: left;font-size: 20px" id="minimo"></span><span style="    width: 100%; position: relative; float: left;font-size: 20px" id="ganhos">GANHOS:</span><span style="    width: 100%; position: relative; float: left;font-size: 40px; " id="ganhos2"></span></div>');
 setInterval(ganar, 100);
 
-
-
 function ganar() {
-
-    if(document.title == "00m:03s - FreeDoge.co.in - Win free dogecoins every hour!"){ok = 0}
-
-  if (parseFloat($('#balance').html()) < max2) {
+  if (document.title == "00m:03s - FreeDoge.co.in - Win free dogecoins every hour!") {
+    ok = 0
+  }
+  if ((parseFloat($('#balance').html()) - (parseFloat($('#double_your_btc_stake').val() * 2))) < max2) {
     ok = 0;
     beep();
-
   }
   a = $('#double_your_' + moeda + '_bet_win').css('display');
   if (a == "block") {
@@ -39,7 +35,12 @@ function ganar() {
     if ($('#double_your_' + moeda + '_bet_hi_button').attr('disabled') == 'disabled') {} else {
       a = $('#double_your_' + moeda + '_bet_win').css('display');
       if (a == "block") {
-        max2 = max2 + 0.056;
+        if (moeda == 'btc') {
+          max2 = max2 + 0.00000001;
+        } else {
+          max2 = max2 + 0.059;
+        }
+        //max2 = max2 + 0.00000001;
         ganhadas = ganhadas + 1;
         win = win + 1;
         cont = 0;
@@ -74,7 +75,7 @@ function ganar() {
   console.log("perdidas (LO): " + perdidas);
   // $('#ganhadas').html("Perdidas (LO): "+ perdidas);
   $('#minimo').html("Minimo: " + max2);
-  $('#ganhos2').html(  parseFloat($('#balance').html())- ganho_inicial);
+  $('#ganhos2').html(parseFloat($('#balance').html()) - ganho_inicial);
   console.log("@@@@@@@@@@@@@@@@@");
   console.log("max: " + max);
   console.log("cont: " + cont);
